@@ -4,7 +4,10 @@ import com.abacus.resources.data.IData;
 
 public class Result implements IData {
     private String message;
-    public Result(String message) {
+    private long id;
+
+    public Result(long id, String message) {
+        this.id = id;
         this.message = message;
     }
     public void setMessage(String message) {
@@ -19,7 +22,7 @@ public class Result implements IData {
     }
 
     public long getId() {
-        return -1;
+        return this.id;
     }
 
     public void setType(String dataType) {

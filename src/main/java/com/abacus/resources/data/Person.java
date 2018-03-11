@@ -6,6 +6,11 @@ public class Person extends Data {
     private final int age;
     private final String locale;
 
+    public Person() {
+        this.name = "";
+        this.age = 0;
+        this.locale = "";
+    }
 
     public Person(long id, String name, int age, String locale) {
         super(id);

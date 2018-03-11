@@ -2,9 +2,14 @@ package com.abacus.resources.data;
 
 public class Data implements IData {
 
-    private final long id;
+    private long id;
     private String dataType;
+    public Data() {}
     public Data(long id) {
+        this.id = id;
+    }
+
+    public void setId(long id) {
         this.id = id;
     }
 

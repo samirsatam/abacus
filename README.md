@@ -1,7 +1,7 @@
 # abacus_insights
 Provide an example of a SpringBoot REST service that conforms to the following specification.
 Please include class UML diagram, sequence diagram, and unit tests where applicable.
-Please include build instructions for building and running your application.
+Please include build instructions for building and running your application. (See build /run instructions below)
 
 The application must support the following methods and endpoints:
 
@@ -38,4 +38,56 @@ Test Cases for validation:
 
 * Given the person does not exist,
 	when the system receives a DELETE message,
-		then the system returns a HTTP 404 response 
+		then the system returns a HTTP 404 response
+
+Build Instructions.
+------------------------------
+The building is easy. The project uses gradle to build. Gradle version 4.6. Please refer to gradle installation instructions at https://gradle.org/install/
+To build
+1. Change directory to project root (E.g - cd /Users/samirss/Documents/projects/springboot_example)
+2. Run the gradle build command.
+    gradle build.
+The build should create a person-service-0.1.0.jar build/libs directory.
+
+Run Instructions.
+------------------------------
+We will use the Spring Boot Actuator service to run and test this app. You can read all about it at https://spring.io/guides/gs/actuator-service/
+So to run it from the command line, simply run the following command.
+
+java -jar build/libs/person-service-0.1.0.jar
+
+Testing.
+------------------------------
+Since this is a webservice, we can use PostMan or similar tools to submit a JSON payload and test the results. I have used "curl" for testing it locally.
+
+PUT verb.
+------------------------------
+Use the PUT verb to push some data into the service. The following command PUTs "Test User" with id "22"
+E.g. curl -H 'Content-Type: application/json' -X PUT -d '{"id":22,"name":"Test User","age":"100", "locale":"de_DE", "type":"Person"}' http://localhost:8080/resources/data/put
+
+The following command PUTs "Test User2" without id, not a random id is generated.
+E.g. curl -H 'Content-Type: application/json' -X PUT -d '{"name":"Test User2","age":"100", "locale":"de_DE", "type":"Person"}' http://localhost:8080/resources/data/put
+
+Note: the result includes the "id" of the person added.
+
+GET verb.
+------------------------------
+The format is http://localhost:8080/resources/data/{dataid}
+E.g. curl http://localhost:8080/resources/data/22
+SPECIAL CASE: if you pass in the dataid of -1 like so.... http://localhost:8080/resources/data/-1 you will get back all the Person json objects back.
+You can also use http://localhost:8080/resources/data/all to get all the Data objects added to the webservice.
+
+DELETE verb.
+------------------------------
+Use the DELETE verb to remove data objects from the webservice.
+curl -H 'Content-Type: application/json' -X DELETE http://localhost:8080/resources/data/{dataid}
+E.g. curl -H 'Content-Type: application/json' -X DELETE http://localhost:8080/resources/data/22
+Note: Just like the PUT verb, the DELETE verb returns the data object that was deleted.
+
+OTHER NOTES.
+------------------------------
+Since this is just a sample program lacking any real backend, the service stores all objects in an internal HashMap.
+SECURITY: Again as this is just a sample program, there is no real security behind the webservice. We could enable some basic security by uncommenting line 31 in build.gradle file.
+This enables spring-boot-starter-security and presents us wth a login box before every access to the service, but again in real production systems I am unsure how sufficient the basic security would be.
+As in that case, we might want to integrate with an LDAP server, or use OAUTH2, or SAML.
+
