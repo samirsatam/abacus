@@ -2,9 +2,9 @@ package com.abacus.resources.data;
 
 public class Person extends Data {
 
-    private final String name;
-    private final int age;
-    private final String locale;
+    private String name;
+    private int age;
+    private String locale;
 
     public Person() {
         this.name = "";
@@ -30,5 +30,17 @@ public class Person extends Data {
 
     public String getLocale() {
         return locale;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 }

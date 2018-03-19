@@ -13,7 +13,7 @@ import java.util.*;
 
 @Controller
 public class DataController {
-    private static HashMap<Long, IData> dataStore = new HashMap<Long, IData>();
+    private static HashMap<Long, Data> dataStore = new HashMap<Long, Data>();
     //static {
     //    dataStore.put((long)1000, new Person(1000, "Samir", 10, "en_US"));
     //}
@@ -29,7 +29,7 @@ public class DataController {
             }
         }
         else {
-            IData dataToReturn = dataStore.get(data_id);
+            Data dataToReturn = dataStore.get(data_id);
             if (dataToReturn == null) {
                 throw new NotFoundException("Data not found");
             } else {
@@ -51,10 +51,37 @@ public class DataController {
         return retVal;
     }
 
-	@PutMapping("/resources/data/put")
+	@PutMapping("/resources/data/{data_id}")
     @ResponseBody
-    public IData putResource(@RequestBody Person data) {
+    public IData putResource(@PathVariable("data_id") long data_id, @RequestBody Person data) {
     	// for now get Data = new Person
+        String dataType = data.getType();
+        if (dataType == null)
+            throw new InternalServerException("dataType is Null");
+        if (dataType.equalsIgnoreCase("person")) {
+            Person person = (Person) dataStore.get(data_id);
+            if (person == null) {
+                person = new Person();
+            }
+            person.setId(data_id);
+            person.setName(((Person) data).getName());
+            person.setAge(((Person) data).getAge());
+            person.setLocale(((Person) data).getLocale());
+            dataStore.put(data_id, person);
+            Result r = new Result(data.getId(), "SUCCESS");
+            System.out.println(r.getId());
+            return r;
+        }
+        else {
+            //return new Result(-1,"Data not a person, Only Person Data types are currently supported.");
+            throw new NotSupportedException("Data not a person, Only Person Data types are currently supported");
+        }
+    }
+
+    @PostMapping("/resources/data/post")
+    @ResponseBody
+    public IData postResource(@RequestBody Person data) {
+        // for now get Data = new Person
         String dataType = data.getType();
         if (dataType == null)
             throw new InternalServerException("dataType is Null");
@@ -82,7 +109,7 @@ public class DataController {
 	@DeleteMapping("/resources/data/{data_id}")
     @ResponseBody
     public IData deleteResource(@PathVariable("data_id") long data_id)  {
-        IData dataToReturn = null;
+        Data dataToReturn = null;
         if (dataStore.containsKey(data_id)) {
             dataToReturn = dataStore.get(data_id);
             dataStore.remove(data_id);
@@ -92,4 +119,14 @@ public class DataController {
         }
         return dataToReturn;
     }
+
+    //@ExceptionHandler
+    //void handleIllegalArgumentException(IllegalArgumentException e, HttpServletResponse response) throws IOException {
+    //    response.sendError(HttpStatus.BAD_REQUEST.value());
+    //}
+
+    //@ExceptionHandler({IllegalArgumentException.class, NullPointerException.class})
+    //void handleBadRequests(HttpServletResponse response) throws IOException {
+    //    response.sendError(HttpStatus.BAD_REQUEST.value());
+    //}
 }

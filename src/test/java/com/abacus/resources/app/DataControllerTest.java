@@ -34,7 +34,7 @@ public class DataControllerTest {
     @Test
     public void putPerson() throws Exception {
         MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.put("/resources/data/put")
+                MockMvcRequestBuilders.put("/resources/data/23")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content("{\"id\":23,\"name\":\"Test User\",\"age\":100,\"locale\":\"en_US\",\"type\":\"Person\"}");
@@ -47,7 +47,7 @@ public class DataControllerTest {
     @Test
     public void getPerson() throws Exception {
         MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.put("/resources/data/put")
+                MockMvcRequestBuilders.put("/resources/data/23")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content("{\"id\":23,\"name\":\"Test User\",\"age\":100,\"locale\":\"en_US\",\"type\":\"Person\"}");
@@ -65,7 +65,7 @@ public class DataControllerTest {
     @Test
     public void deletePerson() throws Exception {
         MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.put("/resources/data/put")
+                MockMvcRequestBuilders.put("/resources/data/23")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content("{\"id\":23,\"name\":\"Test User\",\"age\":100,\"locale\":\"en_US\",\"type\":\"Person\"}");

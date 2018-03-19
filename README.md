@@ -5,7 +5,7 @@ Please include build instructions for building and running your application. (Se
 
 The application must support the following methods and endpoints:
 
-* PUT    /resources/data
+* PUT    /resources/data/{data_id}
 * GET    /resources/data/{data_id}
 * DELETE /resources/data/{data_id}
 
@@ -63,12 +63,7 @@ Since this is a webservice, we can use PostMan or similar tools to submit a JSON
 PUT verb.
 ------------------------------
 Use the PUT verb to push some data into the service. The following command PUTs "Test User" with id "22"
-E.g. curl -H 'Content-Type: application/json' -X PUT -d '{"id":22,"name":"Test User","age":"100", "locale":"de_DE", "type":"Person"}' http://localhost:8080/resources/data/put
-
-The following command PUTs "Test User2" without id, not a random id is generated.
-E.g. curl -H 'Content-Type: application/json' -X PUT -d '{"name":"Test User2","age":"100", "locale":"de_DE", "type":"Person"}' http://localhost:8080/resources/data/put
-
-Note: the result includes the "id" of the person added.
+E.g. curl -H 'Content-Type: application/json' -X PUT -d '{"name":"Test User2","age":"100", "locale":"de_DE", "type":"Person"}' http://localhost:8080/resources/data/22
 
 GET verb.
 ------------------------------
